@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node --project tsconfig.server.json server/index.ts",
+    "dev": "ts-node --project tsconfig.server.json server/index.js",
     "build:server": "tsc --project tsconfig.server.json",
     "build:next": "next build",
     "build": "npm run build:next && npm run build:server",
@@ -14,8 +14,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/axios": "^0.14.0",
+    "axios": "^0.20.0",
     "express": "^4.17.1",
-    "next": "^9.2.1",
+    "express-session": "^1.17.3",
+    "next": "^9.5.5",
+    "passport": "^0.6.0",
+    "passport-lnurl-auth": "^1.5.1",
+    "path": "^0.12.7",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
