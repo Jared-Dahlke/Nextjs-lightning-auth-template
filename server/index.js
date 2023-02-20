@@ -1,24 +1,19 @@
-import express, { Request, Response } from 'express'
+import express from 'express'
 import next from 'next'
 const LnurlAuth = require('passport-lnurl-auth')
 const passport = require('passport')
 const session = require('express-session')
-const path = require('path')
-
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
-const port = process.env.PORT || 3000
+const port = 3000
 
-//const baseUrl = process.env.BASE_URL // || 'http://localhost:3000'
+const baseUrl = process.env.BASE_URL
 
 ;(async () => {
 	try {
 		await app.prepare()
 		const server = express()
-		server.get('/test', (req, res) => {
-			return res.send('test')
-		})
 
 		server.use(
 			session({
@@ -51,32 +46,25 @@ const port = process.env.PORT || 3000
 		server.use(passport.authenticate('lnurl-auth'))
 		server.get('/', function (req, res) {
 			if (!req.user) {
-				console.log('not authenticated')
 				return res.send(
 					'You are not authenticated. To login go <a href="/login">here</a>.'
 				)
-
-				// return res.redirect('/login');
 			}
-			console.log('0authenticated')
 			res.send('Logged-in')
 		})
 		server.get(
 			'/login',
 			function (req, res, next) {
 				if (req.user) {
-					console.log('already authenticated')
 					// Already authenticated.
-					//return res.redirect(process.env.FRONT_END_URL)
-					return res.redirect('/home')
+					return res.redirect(baseUrl + '/home')
 				}
-				console.log('next')
 				next()
 			},
 			new LnurlAuth.Middleware({
-				callbackUrl: '/login',
-				cancelUrl: '/' // process.env.FRONT_END_URL,
-				//loginTemplateFilePath: path.join(__dirname, 'login.html')
+				callbackUrl: baseUrl + '/login',
+				cancelUrl: baseUrl,
+				loginTemplateFilePath: 'server/login.html'
 			})
 		)
 		server.get('/user', (req, res) => {
@@ -87,7 +75,7 @@ const port = process.env.PORT || 3000
 				req.session.destroy()
 				res.json({ message: 'user logged out' })
 				// Already authenticated.
-				return res.redirect('/')
+				return res.redirect(baseUrl)
 			}
 			next()
 		})
@@ -98,7 +86,7 @@ const port = process.env.PORT || 3000
 
 		server.listen(port, (err) => {
 			if (err) throw err
-			console.log(`> Ready on localhost:${port} - env ${process.env.NODE_ENV}`)
+			console.log(`Ready on ${baseUrl}`)
 		})
 	} catch (e) {
 		console.error(e)

@@ -32,3 +32,4 @@ I deployed this to https://render.com/ by doing the following:
 1. create new web service
 2. for the `build command` use `npm i next && npm run build`
 3. for the `start command` use `npm start`
+4. add the domain that you are deploying to as an environment variable: Go to `environment` in Render, and add `BASE_URL=https://www.YOURDOMAIN.com` . So for example for my site I used `https://lnauth-template.onrender.com`
