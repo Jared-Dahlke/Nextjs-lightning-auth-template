@@ -10,7 +10,7 @@ const app = next({ dev })
 const handle = app.getRequestHandler()
 const port = process.env.PORT || 3000
 
-const baseUrl = process.env.BASE_URL // || 'http://localhost:3000'
+//const baseUrl = process.env.BASE_URL // || 'http://localhost:3000'
 
 ;(async () => {
 	try {
@@ -68,14 +68,14 @@ const baseUrl = process.env.BASE_URL // || 'http://localhost:3000'
 					console.log('already authenticated')
 					// Already authenticated.
 					//return res.redirect(process.env.FRONT_END_URL)
-					return res.redirect(baseUrl + '/home')
+					return res.redirect('/home')
 				}
 				console.log('next')
 				next()
 			},
 			new LnurlAuth.Middleware({
-				callbackUrl: baseUrl + '/login',
-				cancelUrl: baseUrl // process.env.FRONT_END_URL,
+				callbackUrl: '/login',
+				cancelUrl: '/' // process.env.FRONT_END_URL,
 				//loginTemplateFilePath: path.join(__dirname, 'login.html')
 			})
 		)
@@ -87,7 +87,7 @@ const baseUrl = process.env.BASE_URL // || 'http://localhost:3000'
 				req.session.destroy()
 				res.json({ message: 'user logged out' })
 				// Already authenticated.
-				return res.redirect(baseUrl)
+				return res.redirect('/')
 			}
 			next()
 		})

@@ -1,6 +1,6 @@
 import Axios from 'axios'
 import React from 'react'
-import { baseUrl } from '../constants'
+//import { baseUrl } from '../constants'
 
 export const useUser = () => {
 	const [user, setUser] = React.useState<string | null>(null)
@@ -8,7 +8,7 @@ export const useUser = () => {
 		Axios({
 			method: 'GET',
 			withCredentials: true,
-			url: baseUrl + '/user'
+			url: '/user'
 		}).then((res) => {
 			res.data.id ? setUser(res.data.id) : (window.location.href = '/')
 		})
