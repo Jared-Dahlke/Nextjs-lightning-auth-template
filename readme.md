@@ -1,6 +1,6 @@
 # nextjs-lightning-passport-lnurl-auth
 
-A Next.js template that comes with Lightning login
+A simple Next.js template that comes with Lightning login
 
 ## Why did I make this?
 
